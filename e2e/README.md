@@ -48,10 +48,10 @@ npx playwright test --headed
 
 Screenshots are saved automatically to `e2e/screenshots/` during each test run. Each meaningful step produces a named screenshot:
 
-- `Katharina_Bernier-01-sign-in-page.png`
-- `Katharina_Bernier-02-credentials-entered.png`
-- `Katharina_Bernier-03-home-page.png`
-- `contact-search-results-Devontae.png`
+- `Heath93-01-sign-in-page.png`
+- `Heath93-02-credentials-entered.png`
+- `Heath93-03-home-page.png`
+- `contact-search-results-Dina.png`
 - `confirmation-screen.png`
 - etc.
 
