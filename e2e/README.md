@@ -1,38 +1,71 @@
-# e2e — End-to-end automated tests
+# E2E Tests — RWA-142 · Send Money to a Contact
 
-Put your automated end-to-end tests in this folder.
+Playwright + TypeScript tests covering the Send Money flow (RWA-142) and Sign In (RWA-118).
 
-## Tooling
+## Prerequisites
 
-**Your choice.** Use whatever you're most effective with — Playwright, Cypress, Selenium, WebdriverIO, a hybrid UI + API approach, etc. Nothing is pre-installed; add your tool and its config as part of your submission.
+- Node.js (use the repo's `.nvmrc` version: `nvm use`)
+- App running locally: `yarn dev` (frontend at http://localhost:3000, API at http://localhost:3001)
+- Fresh seed data: `yarn db:seed:dev`
 
-## Running the app under test
+## Install
+
+From the project root:
 
 ```bash
-nvm use
-yarn install
-yarn dev      # frontend http://localhost:3000, API http://localhost:3001
+cd e2e
+npm install
+npx playwright install chromium
 ```
 
-Seeded users log in with password `s3cret` (run `yarn list:dev:users` for usernames). Reset data with `yarn db:seed:dev`.
-
-## Wiring up the test command
-
-Point the `test:e2e` script in `package.json` at your runner so the suite runs with:
+Or from the project root, the `package.json` `test:e2e` script handles it:
 
 ```bash
 yarn test:e2e
 ```
 
-It currently fails with a placeholder message until you configure it. Add any extra setup (install, browser download, starting the app) to a short README here.
+## Run Tests
 
-## What to cover
+```bash
+# From project root (runs via package.json script)
+yarn test:e2e
 
-See the main `README.md` (section 5). In short:
+# Or directly from e2e/ folder
+cd e2e
+npx playwright test
 
-1. **Happy path first** — full journey from login to sending money, asserting the payment succeeds.
-2. **Then edge / failure paths** — invalid login, validation errors, invalid amounts, missing contact/bank account, etc.
+# Run a specific test file
+npx playwright test tests/send-money.spec.ts
 
-Capture a **screenshot at each meaningful step** (commit them, e.g. into `e2e/screenshots/`) as visual evidence of the run.
+# Run with UI mode (interactive)
+npx playwright test --ui
 
-Keep tests deterministic and independently runnable.
+# Run headed (see browser)
+npx playwright test --headed
+```
+
+## Screenshots
+
+Screenshots are saved automatically to `e2e/screenshots/` during each test run. Each meaningful step produces a named screenshot:
+
+- `Katharina_Bernier-01-sign-in-page.png`
+- `Katharina_Bernier-02-credentials-entered.png`
+- `Katharina_Bernier-03-home-page.png`
+- `contact-search-results-Devontae.png`
+- `confirmation-screen.png`
+- etc.
+
+## Test Structure
+
+```
+e2e/
+  tests/
+    send-money.spec.ts     # RWA-142: Send money happy path + edge cases
+  screenshots/             # Auto-generated per test run
+  playwright.config.ts     # Playwright configuration
+  README.md                # This file
+```
+
+## AI Usage
+
+See `AI-USAGE.md` in the repo root for details on how AI tools were used in this assessment.

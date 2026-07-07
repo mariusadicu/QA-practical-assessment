@@ -142,7 +142,7 @@
     "lint": "eslint && prettier --check \"**/**.{ts,js,tsx}\" \"*.{json,md,yml}\"",
     "list:dev:users": "cat data/database.json | json -a users | json -a id username",
     "types": "tsc --noEmit",
-    "test:e2e": "echo \"No e2e runner configured yet. Add your test command here and place tests in the /e2e folder — see README.md\" && exit 1",
+    "test:e2e": "cd e2e && npx playwright test",
     "start:api": "yarn tsnode --files backend/app.ts",
     "start:api:watch": "nodemon --exec yarn tsnode --watch 'backend' backend/app.ts",
     "start:react:proxy-server": "yarn tsnode scripts/testServer.ts",
