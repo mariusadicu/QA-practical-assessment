@@ -108,7 +108,7 @@ And the payment is not shown in the third user's "Mine" or "Friends" feed
 
 **[QA: High risk — money movement, automate first]**  
 - **Test type:** Automated UI (E2E: login → select contact → enter amount → Pay → confirm)
-- **Data dependencies:** Sender must have a linked bank account and positive balance; receiver must exist. Use seeded user `Katharina_Bernier` → `Devontae.Stamm`.
+- **Data dependencies:** Sender must have a linked bank account and positive balance; receiver must exist. Use seeded user `Heath93` → `Dina20`.
 - **Observations:**
   - "Appears at the top of my Mine feed" — assumes newest-first sort. Confirm sort order is guaranteed, not coincidental.
   - Confirmation screen content is unspecified — document what fields must appear so the assertion is objective.
@@ -137,7 +137,7 @@ And the payment is not shown in the third user's "Mine" or "Friends" feed
   - Missing from AC3: non-numeric input ("abc"), clipboard-pasted formatted values ("$1,000.00"), amounts with 3+ decimal places. Add these as test cases.
   - Assert `disabled` attribute OR `aria-disabled="true"` on Pay button — both must be checked.
   - Also verify that a direct API call (`POST /transactions` with amount=0) is rejected at the server level, not just blocked by UI.
-  - **⚠️ Source code finding:** The amount input component has `allowNegative={true}` set explicitly. This directly contradicts AC3, which states negative values should disable Pay. Automated tests should expose this gap — a negative amount test is expected to fail against the current implementation.
+  - **⚠️ Bug confirmed:** The Pay button stays enabled when amount is `0` — a `$0.00` transaction can be submitted and completes successfully. This directly contradicts AC3. See bug-report.md (BUG-02). Negative input (`-25`) is sanitized to its absolute value (`25`) by the field, so negative entry does not bypass AC3.
 
 ---
 
@@ -170,7 +170,7 @@ And the payment is not shown in the third user's "Mine" or "Friends" feed
 - **Data dependencies:** Three distinct users; a completed transaction between two of them; third user in a fresh session.
 - **Observations:**
   - **BLOCKER:** "Per privacy rules" is undefined. Cannot write an objective automated assertion until the expected display format is specified (e.g., amount hidden vs. redacted vs. shown as "$-").
-  - At API layer: verify `GET /transactions` for the third user does NOT include the Katharina→Devontae transaction in personal or contacts results.
+  - At API layer: verify `GET /transactions` for the third user does NOT include the Heath93→Dina20 transaction in personal or contacts results.
   - At UI layer: manually document what is actually rendered for the Everyone feed entry, and raise a bug if it differs from whatever the privacy rule turns out to be.
 
 ---
